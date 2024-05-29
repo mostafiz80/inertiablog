@@ -13,8 +13,6 @@ class StaticController extends Controller
     public function home()
     {
         return Inertia::render('Welcome', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
             'Categories' => Category::all(),
             'Randompost' => Post::inRandomOrder()->limit(3)->get(),
         ]);
@@ -24,8 +22,6 @@ class StaticController extends Controller
     public function about()
     {
         return Inertia::render('About', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
             'Categories' => Category::all(),
             'Randompost' => Post::inRandomOrder()->limit(3)->get(),
         ]);
@@ -33,10 +29,16 @@ class StaticController extends Controller
     public function portfolio()
     {
         return Inertia::render('Portfolio', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
             'Categories' => Category::all(),
             'Randompost' => Post::inRandomOrder()->limit(3)->get(),
         ]);
+    }
+    public function birthday()
+    {
+        return Inertia::render('Tools/Birthdate');
+    }
+    public function contact()
+    {
+        return Inertia::render('Contact');
     }
 }

@@ -13,7 +13,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.users.userindex', [
+            'listusers' => User::latest()->paginate(10),
+        ]);
     }
 
     /**
@@ -43,9 +45,11 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(int $id)
     {
-        //
+        return view('admin.users.edituser', [
+            'userdata' => User::findOrFail($id),
+        ]);
     }
 
     /**

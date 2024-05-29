@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaticController;
@@ -9,21 +13,21 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [StaticController::class, 'home'])->name("home");
-
 Route::get('/about', [StaticController::class, 'about'])->name("about");
-
-Route::get('/contact', function () {
-    return Inertia::render('Contact', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name("contact");
+Route::get('/portfolio', [StaticController::class, 'portfolio'])->name("portfolio");
+Route::get('/birthday-tool', [StaticController::class, 'birthday'])->name("birthday-tool");
+Route::get('/contact', [StaticController::class, 'contact'])->name("contact");
 
 Route::get('/codespace', [PostController::class, 'index'])->name("codespace");
 Route::get('/single/{slug}', [PostController::class, 'show'])->name("single");
 
-Route::get('/portfolio', [StaticController::class, 'portfolio'])->name("portfolio");
 
+// Admin user
+Route::get('/admin/dashboard', [AdminController::class, 'index'])->middleware(['auth', 'verified', 'Admin'])->name('admin.dashboard');
+Route::get('/admin', [AdminController::class, 'index'])->middleware(['auth', 'verified', 'Admin'])->name('admin.dashboard');
+Route::middleware(['auth', 'verified', 'Admin'])->resource('/admin/users', UsersController::class);
+Route::middleware(['auth', 'verified', 'Admin'])->resource('/admin/posts', AdminPostController::class);
+Route::middleware(['auth', 'verified', 'Admin'])->resource('/admin/categories', CategoryController::class);
 
 
 Route::get('/dashboard', function () {
