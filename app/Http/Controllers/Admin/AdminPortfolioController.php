@@ -3,20 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Portfolio;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class UsersController extends Controller
+class AdminPortfolioController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('Admin/Users/Users', [
-            'listusers' => User::all(),
-        ]);
+        //
     }
 
     /**
@@ -24,7 +21,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Users/Adduser');
+        //
     }
 
     /**
@@ -38,7 +35,7 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Portfolio $portfolio)
     {
         //
     }
@@ -46,17 +43,15 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(Portfolio $portfolio)
     {
-        return view('admin.users.edituser', [
-            'userdata' => User::findOrFail($id),
-        ]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Portfolio $portfolio)
     {
         //
     }
@@ -64,7 +59,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Portfolio $portfolio)
     {
         //
     }

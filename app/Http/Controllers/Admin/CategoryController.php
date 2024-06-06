@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -36,20 +38,20 @@ class CategoryController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required'],
-            'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category_slug' => ['required', 'string', 'max:255'],
         ]);
 
         $category_slug = Str::limit($request->category_slug, 40, '');
-        $file_name = time() . '.' . $request->icon->extension();
-        request()->icon->move(public_path('images/category'), $file_name);
+        $file_name = time() . '.' . $request->category_image->extension();
+        request()->category_image->move(public_path('images/category'), $file_name);
 
 
 
         $category = new Category();
         $category->name = $request->name;
         $category->description = $request->description;
-        $category->icon = $file_name;
+        $category->category_image = $file_name;
         $category->category_slug = $category_slug;
         if ($category->save()) {
             return redirect()->route('categories.create')->with('success', 'Category Created Successfully');
@@ -79,16 +81,44 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, int $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required'],
+            'category_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_slug' => ['required', 'string', 'max:255'],
+        ]);
+
+        if ($request->category_image) {
+            $file_name = time() . '.' . $request->category_image->extension();
+            request()->category_image->move(public_path('images/category'), $file_name);
+            $category->category_image = $file_name;
+        }
+
+
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category_slug = Str::limit($request->category_slug, 40, '');
+        $category->category_slug = $category_slug;
+        if ($category->save()) {
+            return redirect()->route('categories.create')->with('success', 'Category updated Successfully');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(int $id)
     {
-        //
+        $postcount = Post::where('category_id', $id)->count();
+        if ($postcount == 0) {
+            $deletecategory = Category::findOrFail($id);
+            $deletecategory->delete();
+            return redirect()->route('categories.create')->with('success', 'Category deleted');
+        } else {
+            return redirect()->route('categories.create')->with('error', 'Remove the posts associate the category');
+        }
     }
 }

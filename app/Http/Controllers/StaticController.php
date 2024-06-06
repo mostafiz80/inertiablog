@@ -37,6 +37,10 @@ class StaticController extends Controller
     {
         return Inertia::render('Tools/Birthdate');
     }
+    public function periodictable()
+    {
+        return Inertia::render('Tools/Periodic');
+    }
     public function contact()
     {
         return Inertia::render('Contact');

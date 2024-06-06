@@ -16,6 +16,7 @@ Route::get('/', [StaticController::class, 'home'])->name("home");
 Route::get('/about', [StaticController::class, 'about'])->name("about");
 Route::get('/portfolio', [StaticController::class, 'portfolio'])->name("portfolio");
 Route::get('/birthday-tool', [StaticController::class, 'birthday'])->name("birthday-tool");
+Route::get('/periodic', [StaticController::class, 'periodictable'])->name("periodic-table");
 Route::get('/contact', [StaticController::class, 'contact'])->name("contact");
 
 Route::get('/codespace', [PostController::class, 'index'])->name("codespace");
