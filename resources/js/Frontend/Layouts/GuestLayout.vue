@@ -71,6 +71,11 @@
                         </li>
 
                         <div v-if="$page.props.auth.user" class="mr-1">
+                            <Link v-if="$page.props.auth.user.role == 1" :href="route('admin.dashboard')"
+                                class="bg-blue-900 hover:bg-blue-700 text-white py-1 px-2 inline-flex items-center">
+                            Admin
+                            </Link>
+
                             <Link :href="route('dashboard')"
                                 class="bg-blue-900 hover:bg-blue-700 text-white py-1 px-2 inline-flex items-center">
                             Dashboard

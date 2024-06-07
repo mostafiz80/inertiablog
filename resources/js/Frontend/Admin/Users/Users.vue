@@ -1,97 +1,78 @@
 <script setup>
 import DefaultLayouts from "../Layouts/DefaultLayouts.vue";
+import { computed } from "vue";
+import { Head, usePage, router, Link } from "@inertiajs/vue3";
 
 defineProps({
-    listusers:{
-        type:Object,
+    listusers: {
+        type: Object,
     },
 });
+
+const page = usePage();
+const flashMessage = computed(() => page.props.flash.message);
+
+const getUsers = (url) => {
+    router.get(url);
+};
 </script>
 
 <template>
+    <Head title="Manage User" />
     <DefaultLayouts>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-
-                <th scope="col" class="px-6 py-3">
-                    Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    User name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Email
-                </th>
-
-                <th scope="col" class="px-6 py-3">
-                    Role
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Joined At
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-
-    
-
-            <tr 
-            v-for="userdata in listusers" 
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{userdata.name}}
-                </th>
-                <td class="px-6 py-4">
-                    {{userdata.username}}
-                </td>
-                <td class="px-6 py-4">
-                    {{userdata.email}}
-                </td>
-                <td class="px-6 py-4">
-                    {{userdata.role}}
-                </td>
-                <td class="px-6 py-4">
-                    {{userdata.created_at}}
-                </td>
-                <td class="px-6 py-4">
-                    <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-    <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
-        <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white">1000</span></span>
-        <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-            <li>
-                <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-            </li>
-            <li>
-                <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-            </li>
-            <li>
-        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+            <div v-if="flashMessage" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Name</th>
+                        <th scope="col" class="px-6 py-3">Username</th>
+                        <th scope="col" class="px-6 py-3">Email</th>
+                        <th scope="col" class="px-6 py-3">Role</th>
+                        <th scope="col" class="px-6 py-3">Joined At</th>
+                        <th scope="col" class="px-6 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="userdata in listusers.data" :key="userdata.id"
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ userdata.name }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ userdata.username }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ userdata.email }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ userdata.role }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ userdata.created_at }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <Link :href="route('users.edit', userdata.id)"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+                            <Link :href="route('users.edit', userdata.id)"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</Link>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Pagination Links -->
+            <div class="pagination p-4">
+                <button class="bg-blue-900 hover:bg-blue-700 text-white py-1 px-2 inline-flex items-center mr-4"
+                    :disabled="!listusers.prev_page_url" @click="getUsers(listusers.prev_page_url)">
+                    Previous
+                </button>
+                <button class="bg-blue-900 hover:bg-blue-700 text-white py-1 px-2 inline-flex items-center"
+                    :disabled="!listusers.next_page_url" @click="getUsers(listusers.next_page_url)">
+                    Next
+                </button>
+            </div>
+        </div>
     </DefaultLayouts>
 </template>

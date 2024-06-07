@@ -1,17 +1,14 @@
 <script setup>
-    import {
-        onMounted
-    } from "vue";
-    import {
-        initFlowbite
-    } from "flowbite";
-    import {
-        Link
-    } from "@inertiajs/vue3";
+    import { onMounted, computed } from "vue";
+    import {  initFlowbite } from "flowbite";
+    import {  Link, usePage } from "@inertiajs/vue3";
     // initialize components based on data attribute selectors
     onMounted(() => {
         initFlowbite();
     });
+
+    const page = usePage()
+    const user = computed(() => page.props.auth.user)
 </script>
 
 <template>
@@ -400,8 +397,8 @@
                 <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
                     id="dropdown">
                     <div class="py-3 px-4">
-                        <span class="block text-sm font-semibold text-gray-900 dark:text-white">yutyutuy</span>
-                        <span class="block text-sm text-gray-900 truncate dark:text-white">yutyuytu</span>
+                        <span class="block text-sm font-semibold text-gray-900 dark:text-white">{{user.name}}</span>
+                        <span class="block text-sm text-gray-900 truncate dark:text-white">{{user.email}}</span>
                     </div>
                     <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
                         <li>
@@ -467,6 +464,7 @@
             </div>
         </div>
     </nav>
+    
     <aside
         class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidenav" id="drawer-navigation">
@@ -683,7 +681,7 @@
                     </a>
                 </li>
                 <li>
-                    <a target="_blank" href="{{ url('') }}"
+                    <a target="_blank" :href="route('home')"
                         class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                         <svg aria-hidden="true"
                             class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"

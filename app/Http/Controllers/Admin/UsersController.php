@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -15,7 +19,7 @@ class UsersController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Users/Users', [
-            'listusers' => User::all(),
+            'listusers' => User::paginate(10),
         ]);
     }
 
@@ -32,7 +36,21 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'username' => 'required|string|max:255|unique:' . User::class,
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $request->session()->flash('message', 'User ' . $request->name . ' Created successfully');
     }
 
     /**
@@ -46,19 +64,48 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit($user)
     {
-        return view('admin.users.edituser', [
-            'userdata' => User::findOrFail($id),
+        return Inertia::render('Admin/Users/Edit', [
+            'userdata' => User::findOrFail($user),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user)
     {
-        //
+    // Find the user by ID or fail
+    $user = User::findOrFail($user);
+
+    // Validate the request data
+    $validated = $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user)],
+        'username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($user)],
+        'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+    ]);
+
+    // Update user data
+    $user->name = $validated['name'];
+    $user->email = $validated['email'];
+    $user->username = $validated['username'];
+
+    // Only update password if it is provided
+    if (!empty($validated['password'])) {
+        $user->password = bcrypt($validated['password']);
+    }
+
+    // Save the updated user data and check for success
+    if ($user->save()) {
+        // Save was successful
+        $request->session()->flash('message', 'User ' . $request->name . ' Updated successfully.');
+    } else {
+        // Save failed
+        $request->session()->flash('message', 'User ' . $request->name . ' update failed.');
+    }
+
     }
 
     /**

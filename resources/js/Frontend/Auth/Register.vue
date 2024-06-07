@@ -69,75 +69,77 @@
                                         d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
                                         fill="#1976D2" />
                                 </svg>
-                            </div>                    <TextInput type="text" id="name" class="bg-gray-50 border border-gray
+                            </div>
+                
                         </a>
-                        <div class="mt-4 flex items-center justify-between">
-                            <span class="border-b w-1/5 lg:w-1/4"></span>
-                            <a href="#" class="text-xs text-center text-gray-500 uppercase">or login with
-                                email</a>
-                            <span class="border-b w-1/5 lg:w-1/4"></span>
-                        </div>
-                        <div class="mt-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                            <TextInput id="name" type="text"
-                                class="bg-gray-200 text-blue-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                                v-model="form.name" required autofocus autocomplete="name" />
-
-                            <InputError class="mt-2" :message="form.errors.name" />
-                        </div>
-                        <div class="mt-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
-                            <TextInput id="email" type="email"
-                                class="bg-gray-200 text-blue-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                                v-model="form.email" required autocomplete="username" />
-
-                            <InputError class="mt-2" :message="form.errors.email" />
-                        </div>
-                        <div class="mt-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Username</label>
-                            <TextInput id="username" type="text"
-                                class="bg-gray-200 text-blue-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                                v-model="form.username" required autofocus />
-
-                            <InputError class="mt-2" :message="form.errors.username" />
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex justify-between">
-                                <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                            </div>
-                            <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password"
-                                required autocomplete="new-password" />
-
-                            <InputError class="mt-2" :message="form.errors.password" />
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex justify-between">
-                                <label class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-                            </div>
-                            <TextInput id="password_confirmation" type="password" class="mt-1 block w-full"
-                                v-model="form.password_confirmation" required autocomplete="new-password" />
-
-                            <InputError class="mt-2" :message="form.errors.password_confirmation" />
-                        </div>
-                        <div class="mt-8">
-                            <button class="bg-blue-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-600"
-                                :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                                Register
-                            </button>
-                        </div>
-                        <div class="mt-4 flex items-center justify-between">
-                            <span class="border-b w-1/5 md:w-1/4"></span>
-                            <a href="#" class="text-xs text-gray-500 uppercase">or sign in</a>
-
-                            <span class="border-b w-1/5 md:w-1/4"></span>
-                        </div>
-                        <div class="mt-8">
-                            <Link :href="route('login')"
-                                class="bg-blue-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-600">
-                            Already registered?
-                            </Link>
-                        </div>
+                        <div class="mt-4
+                                flex items-center justify-between">
+                                <span class="border-b w-1/5 lg:w-1/4"></span>
+                                <a href="#" class="text-xs text-center text-gray-500 uppercase">or login with
+                                    email</a>
+                                <span class="border-b w-1/5 lg:w-1/4"></span>
                     </div>
+                    <div class="mt-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                        <TextInput id="name" type="text"
+                            class="bg-gray-200 text-blue-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                            v-model="form.name" required autofocus autocomplete="name" />
+
+                        <InputError class="mt-2" :message="form.errors.name" />
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                        <TextInput id="email" type="email"
+                            class="bg-gray-200 text-blue-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                            v-model="form.email" required autocomplete="username" />
+
+                        <InputError class="mt-2" :message="form.errors.email" />
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                        <TextInput id="username" type="text"
+                            class="bg-gray-200 text-blue-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                            v-model="form.username" required autofocus />
+
+                        <InputError class="mt-2" :message="form.errors.username" />
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                        </div>
+                        <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password"
+                            required autocomplete="new-password" />
+
+                        <InputError class="mt-2" :message="form.errors.password" />
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                        </div>
+                        <TextInput id="password_confirmation" type="password" class="mt-1 block w-full"
+                            v-model="form.password_confirmation" required autocomplete="new-password" />
+
+                        <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                    </div>
+                    <div class="mt-8">
+                        <button class="bg-blue-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-600"
+                            :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Register
+                        </button>
+                    </div>
+                    <div class="mt-4 flex items-center justify-between">
+                        <span class="border-b w-1/5 md:w-1/4"></span>
+                        <a href="#" class="text-xs text-gray-500 uppercase">or sign in</a>
+
+                        <span class="border-b w-1/5 md:w-1/4"></span>
+                    </div>
+                    <div class="mt-8">
+                        <Link :href="route('login')"
+                            class="bg-blue-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-600">
+                        Already registered?
+                        </Link>
+                    </div>
+                </div>
                 </div>
             </section>
         </form>

@@ -2,12 +2,6 @@
 import { Head, Link } from "@inertiajs/vue3";
 import GuestLayout from "./Layouts/GuestLayout.vue";
 defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
     Categories: {
         type: Object,
     },
