@@ -57,10 +57,10 @@ class CategoryController extends Controller
         $category->category_slug = $category_slug;
         if ($category->save()) {
             // Save was successful
-            $request->session()->flash('message', 'User ' . $request->categoryName . ' Updated successfully.');
+            $request->session()->flash('message', 'Category ' . $request->categoryName . ' created successfully.');
         } else {
             // Save failed
-            $request->session()->flash('message', 'User ' . $request->categoryName . ' update failed.');
+            $request->session()->flash('message', 'Category ' . $request->categoryName . ' created failed.');
         }
     
 
@@ -92,10 +92,10 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', Rule::unique(Category::class)->ignore($id)],
             'description' => ['required'],
             'category_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_slug' => ['required', 'string', 'max:255'],
+            'category_slug' => ['required', 'string', 'max:255', Rule::unique(Category::class)->ignore($id)],
         ]);
 
         if ($request->category_image) {
@@ -110,7 +110,7 @@ class CategoryController extends Controller
         $category_slug = Str::limit($request->category_slug, 40, '');
         $category->category_slug = $category_slug;
         if ($category->save()) {
-            return redirect()->route('categories.create')->with('success', 'Category updated Successfully');
+            $request->session()->flash('message', 'Category ' . $request->categoryName . ' Updated successfully.');
         }
     }
 

@@ -20,7 +20,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("categories.store"), {
+    form.put(route("categories.update", props.scategory.id), {
         onSuccess: () => form.reset(),
     });
 };
@@ -129,6 +129,16 @@ const flashMessage = computed(() => page.props.flash.message);
 
 <script>
 export default {
+    data() {
+        return {
+            form: this.$inertia.form({
+                name: this.scategory.name || '',
+                description: this.scategory.description || '',
+                category_image: null,
+                category_slug: this.scategory.category_slug || '',
+            })
+        };
+    },
     watch: {
         name: function (newVal) {
             // Generate category slug from category name (remove whitespace and convert to lowercase)
