@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -15,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.blog.category.viewcategory', [
+        return Inertia::render('Admin/Category/Categories', [
             'categories' => Category::all(),
         ]);
     }
@@ -36,10 +38,10 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', Rule::unique(Category::class), 'max:255'],
             'description' => ['required'],
             'category_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_slug' => ['required', 'string', 'max:255'],
+            'category_slug' => ['required', 'string', Rule::unique(Category::class), 'max:255'],
         ]);
 
         $category_slug = Str::limit($request->category_slug, 40, '');
@@ -54,8 +56,13 @@ class CategoryController extends Controller
         $category->category_image = $file_name;
         $category->category_slug = $category_slug;
         if ($category->save()) {
-            return redirect()->route('categories.create')->with('success', 'Category Created Successfully');
+            // Save was successful
+            $request->session()->flash('message', 'User ' . $request->categoryName . ' Updated successfully.');
+        } else {
+            // Save failed
+            $request->session()->flash('message', 'User ' . $request->categoryName . ' update failed.');
         }
+    
 
     }
 
@@ -72,7 +79,7 @@ class CategoryController extends Controller
      */
     public function edit(int $id)
     {
-        return view('admin.blog.category.editcategory', [
+        return Inertia::render('Admin/Category/Edit', [
             'scategory' => Category::findOrFail($id),
             'categories' => Category::all(),
         ]);

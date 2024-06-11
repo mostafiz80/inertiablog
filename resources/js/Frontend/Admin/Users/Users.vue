@@ -56,8 +56,12 @@ const getUsers = (url) => {
                         <td class="px-6 py-4">
                             <Link :href="route('users.edit', userdata.id)"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
-                            <Link :href="route('users.edit', userdata.id)"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</Link>
+                                <Link :href="route('users.destroy', userdata.id)"
+        method="delete"
+        @click.prevent="confirmDeletion"
+        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+    Delete
+  </Link>
                         </td>
                     </tr>
                 </tbody>
@@ -76,3 +80,17 @@ const getUsers = (url) => {
         </div>
     </DefaultLayouts>
 </template>
+<script>
+
+
+export default {
+
+  methods: {
+    confirmDeletion() {
+      if (confirm('Are you sure you want to delete this user?')) {
+        this.$inertia.delete(this.route('users.destroy', this.userdata.id));
+      }
+    }
+  }
+}
+</script>

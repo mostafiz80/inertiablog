@@ -111,8 +111,32 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
-        //
+        try {
+
+
+            // Attempt to delete the user
+            if ($user->delete()) {
+                // Delete was successful
+                $request->session()->flash('message', 'User ' . $user->name . ' deleted successfully.');
+            } else {
+                // Delete failed for unknown reasons
+                $request->session()->flash('message', 'User ' . $user->name . ' delete failed.');
+            }
+        } catch (QueryException $e) {
+            // Check if the error is a foreign key constraint violation
+            if ($e->getCode() == 23000) {
+                // Handle the foreign key constraint violation
+                $request->session()->flash('message', 'Cannot delete user ' . $user->name . ' because it is referenced by other records.');
+            } else {
+                // Handle other possible database errors
+                $request->session()->flash('message', 'An error occurred while trying to delete the user: ');
+            }
+        } catch (\Exception $e) {
+            // Handle other possible exceptions
+            $request->session()->flash('message', 'An error occurred while trying to delete the user: ');
+        }
+  
     }
 }
