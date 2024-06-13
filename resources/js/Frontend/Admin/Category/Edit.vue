@@ -5,12 +5,9 @@ import TextInput from "../Components/TextInput.vue";
 import { computed } from "vue";
 import { Head, usePage, useForm, Link } from "@inertiajs/vue3";
 const props =  defineProps({
-    categories: {
-        type: Object,
-    },
-    scategory: {
-        type: Object,
-    },
+    message: String,
+    categories: Object,
+    scategory: Object,
 });
 const form = useForm({
     name: props.scategory.name,
@@ -36,6 +33,9 @@ const flashMessage = computed(() => page.props.flash.message);
             <!-- First Column: Form -->
             <div class="w-1/2 p-4">
                 <h2 class="text-lg font-semibold mb-4">Add New Category</h2>
+                <div v-if="flashMessage" class="text-red-900 p-4">
+                    {{ flashMessage }}
+                </div>
                 <form @submit.prevent="submit">
                     <div>
                         <label for="name" class="block font-medium"
@@ -75,13 +75,7 @@ const flashMessage = computed(() => page.props.flash.message);
                                 form.category_image = $event.target.files[0]
                             "
                         />
-                        <progress
-                            v-if="form.progress"
-                            :value="form.progress.percentage"
-                            max="100"
-                        >
-                            {{ form.progress.percentage }}%
-                        </progress>
+
                         <InputError
                             class="mt-2"
                             :message="form.errors.category_image"
