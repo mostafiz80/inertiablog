@@ -551,9 +551,9 @@
                     </button>
                     <ul id="dropdown-categories" class="hidden py-2 space-y-2">
                         <li>
-                            <a href="{{ route('categories.create') }}"
-                                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Add
-                                new category</a>
+                            <Link :href="route('categories.create')"
+                                class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            Add Category</Link>
                         </li>
                         <li>
                             <Link :href="route('categories.index')"

@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
-            $table->string('project_name');
-            $table->string('project_images');
-            $table->string('project_framework');
+            $table->string('title');
+            $table->string('image');
+            $table->string('framework');
             $table->foreignId('portfoliocategory_id')->on('portfoliocategories')->constrained();
             $table->timestamps();
         });

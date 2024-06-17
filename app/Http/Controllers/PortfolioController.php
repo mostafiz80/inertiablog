@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePortfolioRequest;
 use App\Http\Requests\UpdatePortfolioRequest;
 use App\Models\Portfolio;
+use App\Models\Portfoliocategory;
+use Inertia\Inertia;
 
 class PortfolioController extends Controller
 {
@@ -13,7 +15,10 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        //
+        return  Inertia::render('Portfolio', [
+            'categories' => Portfoliocategory::all(),
+            'projects' => Portfolio::all(),
+        ]);
     }
 
     /**

@@ -167,16 +167,16 @@
                     </h4>
                     <ul class="text-sm transition-all duration-500">
                         <li class="mb-6">
-                            <a href="/" class="text-gray-600 hover:text-gray-900">Home</a>
+                            <Link :href="route('home')" class="text-gray-600 hover:text-gray-900">Home</Link>
                         </li>
                         <li class="mb-6">
-                            <a href="/" class="text-gray-600 hover:text-gray-900">About</a>
+                            <Link :href="route('about')" class="text-gray-600 hover:text-gray-900">About</Link>
                         </li>
                         <li class="mb-6">
-                            <a href="/" class="text-gray-600 hover:text-gray-900">Pricing</a>
+                            <Link :href="route('codespace')" class="text-gray-600 hover:text-gray-900">Codespace</Link>
                         </li>
                         <li>
-                            <a href="/" class="text-gray-600 hover:text-gray-900">Features</a>
+                            <Link :href="route('contact')" class="text-gray-600 hover:text-gray-900">Contact</Link>
                         </li>
                     </ul>
                 </div>

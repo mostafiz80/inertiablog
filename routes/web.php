@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaticController;
@@ -14,7 +15,7 @@ use Inertia\Inertia;
 
 Route::get('/', [StaticController::class, 'home'])->name("home");
 Route::get('/about', [StaticController::class, 'about'])->name("about");
-Route::get('/portfolio', [StaticController::class, 'portfolio'])->name("portfolio");
+Route::get('/portfolio', [PortfolioController::class, 'index'])->name("portfolio");
 Route::get('/birthday-tool', [StaticController::class, 'birthday'])->name("birthday-tool");
 Route::get('/periodic', [StaticController::class, 'periodictable'])->name("periodic-table");
 Route::get('/contact', [StaticController::class, 'contact'])->name("contact");

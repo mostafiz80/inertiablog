@@ -17,8 +17,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'description' => fake()->text(),
+            'name' => fake()->text(20),
+            'description' => fake()->text(30),
             'category_image' => "https://images.pexels.com/photos/61180/pexels-photo-61180.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=100",
             'category_slug' => Str::random(10),
         ];
